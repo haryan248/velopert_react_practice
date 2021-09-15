@@ -27,6 +27,7 @@ export default class ContactCreate extends React.Component {
             name: "",
             phone: "",
         });
+        this.nameInput.focus();
     };
     // 엔터키로 입력 이벤트 추가
     handelKeyPress = (e) => {
@@ -40,7 +41,16 @@ export default class ContactCreate extends React.Component {
             <div>
                 <h2>Create Contact</h2>
                 <p>
-                    <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange}></input>
+                    <input
+                        ref={(ref) => {
+                            this.nameInput = ref;
+                        }}
+                        type="text"
+                        name="name"
+                        placeholder="name"
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                    ></input>
                     <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange} onKeyPress={this.handelKeyPress}></input>
                 </p>
                 <button onClick={this.handleClick}>Create</button>
