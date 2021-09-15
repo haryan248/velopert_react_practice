@@ -39,13 +39,13 @@ export default class ContactDetails extends React.Component {
             isEdit: !this.state.isEdit,
         });
     };
-
+    // 이름과 번호를 입력할때 마다 작동
     handleChange = (e) => {
         let nextState = {};
         nextState[e.target.name] = e.target.value;
         this.setState(nextState);
     };
-
+    // 수정시 props 함수 실행
     handleEdit = () => {
         this.props.onEdit(this.state.name, this.state.phone);
     };

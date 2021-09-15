@@ -30,24 +30,27 @@ export default class Contact extends React.Component {
             ],
         };
     }
+    // 전화번호부 선택한 index 가 변화하면 작동
     handleChange = (e) => {
         this.setState({
             keyword: e.target.value,
         });
     };
+    // 전화번호부 선택 핸들링
     handleClick = (key) => {
         this.setState({
             selectedKey: key,
         });
     };
-
+    // 전화번호부 추가
     handleCreate = (contact) => {
         this.setState({
             contactData: update(this.state.contactData, { $push: [contact] }),
         });
     };
-
+    // 전화번호부 제거
     handleRemove = () => {
+        // 선택한게 없으면 제거하지 않기
         if (this.state.selectedKey < 0) {
             return;
         }
@@ -55,10 +58,11 @@ export default class Contact extends React.Component {
             contactData: update(this.state.contactData, {
                 $splice: [[this.state.selectedKey, 1]],
             }),
+            // 선택한 전화번호부 초기화
             selectedKey: -1,
         });
     };
-
+    // 전화번호부 수정
     handleEdit = (name, phone) => {
         this.setState({
             contactData: update(this.state.contactData, {
@@ -71,6 +75,7 @@ export default class Contact extends React.Component {
     };
 
     render() {
+        // 검색한 번호부 선택
         const mapToComponents = (data) => {
             data.sort();
             data = data.filter((contact) => {
