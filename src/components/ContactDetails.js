@@ -1,12 +1,55 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default class ContactDetails extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isEdit: false,
+            name: "",
+            phone: "",
+        };
+    }
+
     static defaultProps = {
         contact: {
             name: "",
             phone: "",
         },
+        onRemove: () => {
+            console.error("onRemove not defined");
+        },
+        onEdit: () => {
+            console.error("onEdit not defined");
+        },
     };
+
+    // edit toggle 함수
+    handleToggle = () => {
+        if (!this.state.isEdit) {
+            this.setState({
+                name: this.props.contact.name,
+                phone: this.props.contact.phone,
+            });
+        } else {
+            this.handleEdit();
+        }
+        this.setState({
+            isEdit: !this.state.isEdit,
+        });
+    };
+
+    handleChange = (e) => {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        this.setState(nextState);
+    };
+
+    handleEdit = () => {
+        this.props.onEdit(this.state.name, this.state.phone);
+    };
+
     render() {
         // 선택되었을 때 보여질 부분
         const details = (
@@ -15,6 +58,20 @@ export default class ContactDetails extends React.Component {
                 <p>{this.props.contact.phone}</p>
             </div>
         );
+
+        const edit = (
+            <div>
+                <p>
+                    <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange}></input>
+                </p>
+
+                <p>
+                    <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                </p>
+            </div>
+        );
+        const view = this.state.isEdit ? edit : details;
+
         // 아무것도 선택되지 않았을 때 보여질 부분
         const blank = <div> Nothing is Selected </div>;
         return (
@@ -24,8 +81,19 @@ export default class ContactDetails extends React.Component {
                 {/* isSelected props 값에 따라 어떤걸 보여줄지 정한다
                     ternary expression condition ? true : false */}
 
-                {this.props.isSelected ? details : blank}
+                {this.props.isSelected ? view : blank}
+                <p>
+                    <button onClick={this.handleToggle} onChange={this.handleChange}>
+                        {this.state.isEdit ? "OK" : "Edit"}
+                    </button>
+                    <button onClick={this.props.onRemove}>remove</button>
+                </p>
             </div>
         );
     }
 }
+ContactDetails.propTypes = {
+    contact: PropTypes.object,
+    onRemove: PropTypes.func,
+    onEdit: PropTypes.func,
+};

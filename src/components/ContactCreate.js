@@ -15,6 +15,7 @@ export default class ContactCreate extends React.Component {
         nextState[e.target.name] = e.target.value;
         this.setState(nextState);
     };
+
     handleClick = () => {
         const contact = {
             name: this.state.name,
@@ -27,6 +28,7 @@ export default class ContactCreate extends React.Component {
             phone: "",
         });
     };
+
     render() {
         return (
             <div>

@@ -41,20 +41,23 @@ export default class Contact extends React.Component {
         });
     };
 
-    handleCreate = (contact) => [
+    handleCreate = (contact) => {
         this.setState({
             contactData: update(this.state.contactData, { $push: [contact] }),
-        }),
-    ];
+        });
+    };
 
-    handleRemove = () => [
+    handleRemove = () => {
+        if (this.state.selectedKey < 0) {
+            return;
+        }
         this.setState({
             contactData: update(this.state.contactData, {
                 $splice: [[this.state.selectedKey, 1]],
             }),
             selectedKey: -1,
-        }),
-    ];
+        });
+    };
 
     handleEdit = (name, phone) => {
         this.setState({
@@ -83,7 +86,7 @@ export default class Contact extends React.Component {
                 <h1>Contacts</h1>
                 <input name="keyword" placeholder="Search" value={this.state.keyword} onChange={this.handleChange} />
                 <div>{mapToComponents(this.state.contactData)}</div>
-                <ContactDetails isSelected={this.state.selectedKey !== -1} contact={this.state.contactData[this.state.selectedKey]}></ContactDetails>
+                <ContactDetails isSelected={this.state.selectedKey !== -1} contact={this.state.contactData[this.state.selectedKey]} onRemove={this.handleRemove} onEdit={this.handleEdit}></ContactDetails>
                 <ContactCreate onCreate={this.handleCreate} />
             </div>
         );
