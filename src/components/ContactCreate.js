@@ -28,14 +28,20 @@ export default class ContactCreate extends React.Component {
             phone: "",
         });
     };
-
+    // 엔터키로 입력 이벤트 추가
+    handelKeyPress = (e) => {
+        // enter 치면 클릭 이벤트
+        if (e.charCode === 13) {
+            this.handleClick();
+        }
+    };
     render() {
         return (
             <div>
                 <h2>Create Contact</h2>
                 <p>
                     <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange}></input>
-                    <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                    <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange} onKeyPress={this.handelKeyPress}></input>
                 </p>
                 <button onClick={this.handleClick}>Create</button>
             </div>

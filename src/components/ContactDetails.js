@@ -49,7 +49,13 @@ export default class ContactDetails extends React.Component {
     handleEdit = () => {
         this.props.onEdit(this.state.name, this.state.phone);
     };
-
+    // 엔터키로 입력 이벤트 추가
+    handelKeyPress = (e) => {
+        // enter 치면 클릭 이벤트
+        if (e.charCode === 13) {
+            this.handleToggle();
+        }
+    };
     render() {
         // 선택되었을 때 보여질 부분
         const details = (
@@ -66,7 +72,7 @@ export default class ContactDetails extends React.Component {
                 </p>
 
                 <p>
-                    <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                    <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange} onKeyPress={this.handelKeyPress}></input>
                 </p>
             </div>
         );
