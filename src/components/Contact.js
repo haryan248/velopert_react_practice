@@ -1,6 +1,6 @@
 import React from "react";
 import ContactInfo from "./ContactInfo";
-
+import ContactDetails from "./ContactDetails";
 export default class Contact extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +32,7 @@ export default class Contact extends React.Component {
             keyword: e.target.value,
         });
     };
-    handleClick = (e) => {
+    handleClick = (key) => {
         this.setState({
             selectedKey: key,
         });
@@ -54,6 +54,7 @@ export default class Contact extends React.Component {
                 <h1>Contacts</h1>
                 <input name="keyword" placeholder="Search" value={this.state.keyword} onChange={this.handleChange} />
                 <div>{mapToComponents(this.state.contactData)}</div>
+                <ContactDetails isSelected={this.state.selectedKey !== -1} contact={this.state.contactData[this.state.selectedKey]}></ContactDetails>
             </div>
         );
     }
