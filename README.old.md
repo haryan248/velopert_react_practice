@@ -1,1 +1,0 @@
-# velopert_react_practice
