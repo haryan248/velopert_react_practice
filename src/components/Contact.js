@@ -1,6 +1,8 @@
 import React from "react";
 import ContactInfo from "./ContactInfo";
 import ContactDetails from "./ContactDetails";
+import ContactCreate from "./ContactCreate";
+
 import update from "react-addons-update";
 export default class Contact extends React.Component {
     constructor(props) {
@@ -82,6 +84,7 @@ export default class Contact extends React.Component {
                 <input name="keyword" placeholder="Search" value={this.state.keyword} onChange={this.handleChange} />
                 <div>{mapToComponents(this.state.contactData)}</div>
                 <ContactDetails isSelected={this.state.selectedKey !== -1} contact={this.state.contactData[this.state.selectedKey]}></ContactDetails>
+                <ContactCreate onCreate={this.handleCreate} />
             </div>
         );
     }
